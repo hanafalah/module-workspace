@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Zahzah\ModuleWorkspace\Events;
+namespace Hanafalah\ModuleWorkspace\Events;
 
-class WorkspaceDeleted extends Contracts\WorkspaceEvent
-{
-}
+class WorkspaceDeleted extends Contracts\WorkspaceEvent {}

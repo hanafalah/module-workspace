@@ -1,6 +1,6 @@
 <?php 
 
-use Zahzah\ModuleWorkspace\Models as ModuleWorkspaceModels;
+use Hanafalah\ModuleWorkspace\Models as ModuleWorkspaceModels;
 
 return [    
     'database' => [

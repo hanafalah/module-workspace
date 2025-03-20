@@ -1,6 +1,6 @@
 <?php
 
-namespace Zahzah\ModuleWorkspace\Enums\Workspace;
+namespace Hanafalah\ModuleWorkspace\Enums\Workspace;
 
 enum WorkspaceStatus: int
 {

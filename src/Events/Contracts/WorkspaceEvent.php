@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Zahzah\ModuleWorkspace\Events\Contracts;
+namespace Hanafalah\ModuleWorkspace\Events\Contracts;
 
 use Illuminate\Queue\SerializesModels;
 use Projects\Klinik\Models\Workspace\Workspace;
-use Zahzah\ModuleWorkspace\Contracts\{
+use Hanafalah\ModuleWorkspace\Contracts\{
     ModuleWorkspace
 };
 
@@ -21,7 +21,7 @@ abstract class WorkspaceEvent
      * Create the event instance.
      *
      * @param  \Projects\Klinik\Models\Workspace\Workspace  $workspace
-     * @param  \Zahzah\ModuleWorkspace\Contracts\ModuleWorkspace  $moduleWorkspace
+     * @param  \Hanafalah\ModuleWorkspace\Contracts\ModuleWorkspace  $moduleWorkspace
      * @return void
      */
     public function __construct()

@@ -1,11 +1,12 @@
 <?php
 
-namespace Zahzah\ModuleWorkspace\Resources\Workspace;
+namespace Hanafalah\ModuleWorkspace\Resources\Workspace;
 
 use Illuminate\Http\Request;
-use Zahzah\ModuleRegional\Resources\Address\ShowAddress;
+use Hanafalah\ModuleRegional\Resources\Address\ShowAddress;
 
-class ShowWorkspace extends ViewWorkspace{
+class ShowWorkspace extends ViewWorkspace
+{
 
     /**
      * Transform the resource into an array.
@@ -16,13 +17,13 @@ class ShowWorkspace extends ViewWorkspace{
     public function toArray(Request $request): array
     {
         $arr = [
-            'address' => $this->relationValidation('address',function(){
+            'address' => $this->relationValidation('address', function () {
                 return new ShowAddress($this->address);
             })
         ];
-        $arr = $this->mergeArray(parent::toArray($request),$arr);
-        
-        
+        $arr = $this->mergeArray(parent::toArray($request), $arr);
+
+
         return $arr;
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-namespace Zahzah\ModuleWorkspace\Contracts;
+namespace Hanafalah\ModuleWorkspace\Contracts;
 
-interface ModuleWorkspace{
-    
-}
+interface ModuleWorkspace {}

@@ -1,12 +1,10 @@
 <?php
 
-namespace Zahzah\ModuleWorkspace;
+namespace Hanafalah\ModuleWorkspace;
 
-use Zahzah\LaravelSupport\{
+use Hanafalah\LaravelSupport\{
     Supports\PackageManagement
 };
-use Zahzah\ModuleWorkspace\Contracts\ModuleWorkspace as ContractsModuleWorkspace;
+use Hanafalah\ModuleWorkspace\Contracts\ModuleWorkspace as ContractsModuleWorkspace;
 
-class ModuleWorkspace extends PackageManagement implements ContractsModuleWorkspace{
-
-}
+class ModuleWorkspace extends PackageManagement implements ContractsModuleWorkspace {}

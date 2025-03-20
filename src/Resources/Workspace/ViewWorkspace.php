@@ -1,11 +1,12 @@
 <?php
 
-namespace Zahzah\ModuleWorkspace\Resources\Workspace;
+namespace Hanafalah\ModuleWorkspace\Resources\Workspace;
 
-use Zahzah\LaravelSupport\Resources\ApiResource;
-use Zahzah\ModuleRegional\Resources\Address\ShowAddress;
+use Hanafalah\LaravelSupport\Resources\ApiResource;
+use Hanafalah\ModuleRegional\Resources\Address\ShowAddress;
 
-class ViewWorkspace extends ApiResource{
+class ViewWorkspace extends ApiResource
+{
 
     /**
      * Transform the resource into an array.
@@ -20,7 +21,7 @@ class ViewWorkspace extends ApiResource{
             'uuid'      => $this->uuid,
             'name'      => $this->name
         ];
-        
+
         return $arr;
     }
 }

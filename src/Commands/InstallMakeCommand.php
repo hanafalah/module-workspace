@@ -1,8 +1,9 @@
 <?php
 
-namespace Zahzah\ModuleWorkspace\Commands;
+namespace Hanafalah\ModuleWorkspace\Commands;
 
-class InstallMakeCommand extends EnvironmentCommand{
+class InstallMakeCommand extends EnvironmentCommand
+{
     /**
      * The name and signature of the console command.
      *
@@ -23,7 +24,7 @@ class InstallMakeCommand extends EnvironmentCommand{
      */
     public function handle()
     {
-        $provider = 'Zahzah\ModuleWorkspace\ModuleWorkspaceServiceProvider';
+        $provider = 'Hanafalah\ModuleWorkspace\ModuleWorkspaceServiceProvider';
 
         $this->callSilent('vendor:publish', [
             '--provider' => $provider,
@@ -37,6 +38,6 @@ class InstallMakeCommand extends EnvironmentCommand{
         ]);
         $this->info('✔️  Module Workspace tables migrated');
 
-        $this->comment('zahzah/module-workspace installed successfully.');
+        $this->comment('hanafalah/module-workspace installed successfully.');
     }
 }

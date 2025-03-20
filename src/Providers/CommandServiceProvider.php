@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Zahzah\ModuleWorkspace\Providers;
+namespace Hanafalah\ModuleWorkspace\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Zahzah\ModuleWorkspace\Commands as Commands;
+use Hanafalah\ModuleWorkspace\Commands as Commands;
 
 class CommandServiceProvider extends ServiceProvider
 {
@@ -14,8 +14,9 @@ class CommandServiceProvider extends ServiceProvider
     ];
 
 
-    public function register(){
-        $this->commands(config('module-workspace.commands',$this->commands));
+    public function register()
+    {
+        $this->commands(config('module-workspace.commands', $this->commands));
     }
     /**
      * Get the services provided by the provider.

@@ -1,13 +1,15 @@
 <?php
 
-namespace Zahzah\ModuleWorkspace\Commands;
+namespace Hanafalah\ModuleWorkspace\Commands;
 
-use Zahzah\LaravelSupport\Concerns\ServiceProvider\HasMigrationConfiguration;
+use Hanafalah\LaravelSupport\Concerns\ServiceProvider\HasMigrationConfiguration;
 
-class EnvironmentCommand extends \Zahzah\LaravelSupport\Commands\BaseCommand{
+class EnvironmentCommand extends \Hanafalah\LaravelSupport\Commands\BaseCommand
+{
     use HasMigrationConfiguration;
 
-    protected function dir(): string{
-        return __DIR__.'/../';
+    protected function dir(): string
+    {
+        return __DIR__ . '/../';
     }
 }
