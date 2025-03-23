@@ -2,7 +2,7 @@
 
 namespace Hanafalah\ModuleWorkspace\Enums\Workspace;
 
-enum WorkspaceStatus: int
+enum Status: int
 {
     case ACTIVE    = 1;
     case INACTIVE  = 2;

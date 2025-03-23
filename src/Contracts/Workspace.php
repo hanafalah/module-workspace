@@ -12,10 +12,4 @@ use Hanafalah\LaravelSupport\Contracts\DataManagement;
  */
 interface Workspace extends DataManagement
 {
-    public function addOrChange(?array $attributes = null): self;
-    public function storeWorkspace(): array;
-    public function prepareStoreWorkspace(?array $attributes = null): Model;
-    public function prepareShowWorkspace(?Model $model = null): ?Model;
-    public function showWorkspace(?Model $model = null): array;
-    public function workspace(mixed $conditionals = null): Builder;
 }

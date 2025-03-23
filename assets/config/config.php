@@ -2,10 +2,19 @@
 
 use Hanafalah\ModuleWorkspace\Models as ModuleWorkspaceModels;
 
-return [    
+return [  
+    'app' => [
+        'contracts' => [
+            //ADD YOUR CONTRACTS HERE
+        ],
+    ],  
+    'libs' => [
+        'model' => 'Models',
+        'contract' => 'Contracts'
+    ],
     'database' => [
         'models' => [
-            'Workspace'   => ModuleWorkspaceModels\Workspace\Workspace::class
+            //ADD YOUR MODELS HERE
         ]
     ]
 ];

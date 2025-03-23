@@ -5,8 +5,10 @@ namespace Hanafalah\ModuleWorkspace\Schemas;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
+use Hanafalah\ModuleRegional\Data\AddressData;
 use Hanafalah\ModuleWorkspace\Contracts\Workspace as ContractsWorkspace;
 use Hanafalah\ModuleRegional\Enums\Address\Flag;
+use Hanafalah\ModuleWorkspace\Data\WorkspaceData;
 use Hanafalah\ModuleWorkspace\Resources\Workspace\ShowWorkspace;
 
 class Workspace extends PackageManagement implements ContractsWorkspace
@@ -16,10 +18,6 @@ class Workspace extends PackageManagement implements ContractsWorkspace
     protected string $__entity      = 'Workspace';
     public static $workspace_model;
 
-    protected array $__resources = [
-        'show' => ShowWorkspace::class
-    ];
-
     protected array $__cache = [
         'show' => [
             'name'     => 'workspace',
@@ -28,40 +26,27 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         ]
     ];
 
-    public function addOrChange(?array $attributes = null): self
-    {
-        $this->prepareStoreWorkspace($attributes);
-        return $this;
-    }
-
-    public function storeWorkspace(): array
-    {
-        return $this->transaction(function () {
-            $workspace = $this->prepareStoreWorkspace();
-            $workspace->refresh();
-            return $this->showWorkspace($workspace);
+    public function storeWorkspace(?WorkspaceData $workspace_dto = null): array{
+        return $this->transaction(function() use ($workspace_dto){
+            return $this->showWorkspace($this->prepareStoreWorkspace($workspace_dto ?? WorkspaceData::from(request()->all())));
         });
     }
 
-    public function prepareStoreWorkspace(?array $attributes = null): Model
-    {
-        $attributes ??= request()->all();
-
-        $model = request()->has('uuid') ? $this->workspace()->uuid(request()->uuid)->first() : $this->WorkspaceModel();
-        $lists = ['faskes_code', 'email', 'phone'];
-        foreach ($lists as $list) {
-            $model->{$list} = $attributes[$list] ?? null;
+    public function prepareStoreWorkspace(WorkspaceData $workspace_dto): Model{
+        if (isset($workspace_dto->uuid)){
+            $guard = ['uuid' => $workspace_dto->uuid];
         }
+        $model = $this->WorkspaceModel()->updateOrCreate($guard ?? [], [
+            'name' => $workspace_dto->name, 'status' => $workspace_dto->status
+        ]);
+        $model->fill($workspace_dto->props->toArray());
         $model->save();
 
-        if (isset($attributes['address'])) {
-            $model->address()->updateOrCreate([
-                'model_type' => $model->getMorphClass(),
-                'model_id'   => $model->getKey(),
-                'flag'       => Flag::OTHER->value
-            ], [
-                'name' => $attributes['address']['name']
-            ]);
+        if (isset($workspace_dto->address)) {
+            $address             = &$workspace_dto->address;
+            $address->model_type = $model->getMorphClass();
+            $address->model_id   = $model->getKey(); 
+            $this->schemaContract('address')->prepareStoreAddress($address);
         }
         static::$workspace_model = $model;
         $this->forgetTags('workspace');

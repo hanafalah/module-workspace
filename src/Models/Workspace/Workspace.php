@@ -6,55 +6,36 @@ use Hanafalah\LaravelHasProps\Concerns\HasProps;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Hanafalah\LaravelSupport\Concerns\Support\HasEncoding;
 use Hanafalah\LaravelSupport\Models\BaseModel;
+use Hanafalah\ModuleRegional\Concerns\HasAddress;
 use Hanafalah\ModuleWorkspace\Enums;
-use Hanafalah\ModuleWorkspace\Events;
 use Hanafalah\ModuleWorkspace\Resources\Workspace\ShowWorkspace;
+use Hanafalah\ModuleWorkspace\Resources\Workspace\ViewWorkspace;
 
 class Workspace extends BaseModel
 {
-    use SoftDeletes, HasProps, HasEncoding;
+    use SoftDeletes, HasProps, HasEncoding, HasAddress;
 
-    protected $fillable = [
-        'id',
-        'uuid',
-        'name',
-        'status',
-        'props'
+    protected $list = [
+        'id', 'uuid', 'name', 'status', 'props'
     ];
 
-    protected static function booted(): void
-    {
+    protected $casts = [
+        'uuid' => 'string',
+        'name' => 'string'
+    ];
+
+    protected static function booted(): void{
         parent::booted();
         static::creating(function ($query) {
-            if (!isset($query->status)) $query->status = Enums\Workspace\WorkspaceStatus::DRAFT->value;
+            if (!isset($query->status)) $query->status = Enums\Workspace\Status::ACTIVE->value;
         });
     }
 
-    public function toShowApi()
-    {
-        return new ShowWorkspace($this);
+    public function getShowResource(){
+        return ShowWorkspace::class;
     }
 
-    //EIGER SECTION
-    public function address()
-    {
-        return $this->morphOneModel('Address', 'model');
+    public function getViewResource(){
+        return ViewWorkspace::class;
     }
-    public function addresses()
-    {
-        return $this->morphManyModel('Address', 'model');
-    }
-
-    //END EIGER SECTION
-
-    protected $dispatchesEvents = [
-        'saving'   => Events\SavingWorkspace::class,
-        'saved'    => Events\WorkspaceSaved::class,
-        'creating' => Events\CreatingWorkspace::class,
-        'created'  => Events\WorkspaceCreated::class,
-        'updating' => Events\UpdatingWorkspace::class,
-        'updated'  => Events\WorkspaceUpdated::class,
-        'deleting' => Events\DeletingWorkspace::class,
-        'deleted'  => Events\WorkspaceDeleted::class,
-    ];
 }
