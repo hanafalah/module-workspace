@@ -5,11 +5,8 @@ namespace Hanafalah\ModuleWorkspace\Schemas;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
-use Hanafalah\ModuleRegional\Data\AddressData;
 use Hanafalah\ModuleWorkspace\Contracts\Workspace as ContractsWorkspace;
-use Hanafalah\ModuleRegional\Enums\Address\Flag;
 use Hanafalah\ModuleWorkspace\Data\WorkspaceData;
-use Hanafalah\ModuleWorkspace\Resources\Workspace\ShowWorkspace;
 
 class Workspace extends PackageManagement implements ContractsWorkspace
 {
@@ -53,27 +50,26 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         return $model;
     }
 
-    protected function showUsingRelation()
-    {
+    protected function showUsingRelation(){
         return ['address'];
     }
 
-    public function prepareShowWorkspace(?Model $model = null): ?Model
-    {
-        $this->booting();
-        $model ??= $this->getWorkspace();
-        $uuid = request()->uuid;
-        if (!request()->has('uuid')) throw new \Exception('No uuid provided', 422);
+    public function getWorkspace(): mixed{
+        return static::$workspace_model;
+    }
 
-        $this->addSuffixCache($this->__cache['show'], "workspace-show", $uuid);
-        return $this->cacheWhen(!$this->isSearch(), $this->__cache['show'], function () use ($model, $uuid) {
-            if (!isset($model)) {
-                $model = $this->workspace()->with($this->showUsingRelation())->uuid($uuid)->first();
-            } else {
-                $model->load($this->showUsingRelation());
-            }
-            return static::$workspace_model = $model;
-        });
+    public function prepareShowWorkspace(?Model $model = null, ? array $attributes = null): ?Model{
+        $attributes ??= request()->all();
+
+        $model ??= $this->getWorkspace();
+        if (!isset($model)){
+            $uuid = request()->uuid;
+            if (!isset($uuid)) throw new \Exception('No uuid provided', 422);
+            $model = $this->workspace()->with($this->showUsingRelation())->uuid($uuid)->firstOrFail();
+        }else{
+            $model->load($this->showUsingRelation());
+        }
+        return static::$workspace_model = $model;
     }
 
     public function showWorkspace(?Model $model = null): array
