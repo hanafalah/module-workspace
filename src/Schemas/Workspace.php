@@ -74,11 +74,13 @@ class Workspace extends PackageManagement implements ContractsWorkspace
 
     public function showWorkspace(?Model $model = null): array
     {
-        return $this->transforming($this->__resources['show'], $this->prepareShowWorkspace($model));
+        return $this->showEntityResource(function() use ($model){
+            return $this->prepareShowWorkspace($model);
+        });
     }
 
-    public function workspace(mixed $conditionals = null): Builder
-    {
-        return $this->WorkspaceModel()->withParameters()->conditionals($conditionals);
+    public function workspace(mixed $conditionals = null): Builder{
+        $this->booting();
+        return $this->WorkspaceModel()->withParameters()->conditionals($this->mergeCondition($conditionals ?? []));
     }
 }
