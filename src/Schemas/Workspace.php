@@ -25,7 +25,7 @@ class Workspace extends PackageManagement implements ContractsWorkspace
 
     public function storeWorkspace(?WorkspaceData $workspace_dto = null): array{
         return $this->transaction(function() use ($workspace_dto){
-            return $this->showWorkspace($this->prepareStoreWorkspace($workspace_dto ?? WorkspaceData::from(request()->all())));
+            return $this->showWorkspace($this->prepareStoreWorkspace($workspace_dto ?? $this->requestDTO(WorkspaceData::class)));
         });
     }
 
