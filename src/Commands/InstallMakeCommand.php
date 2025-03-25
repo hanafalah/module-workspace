@@ -25,7 +25,7 @@ class InstallMakeCommand extends EnvironmentCommand
     public function handle()
     {
         $provider = 'Hanafalah\ModuleWorkspace\ModuleWorkspaceServiceProvider';
-
+        
         $this->callSilent('vendor:publish', [
             '--provider' => $provider,
             '--tag'      => 'migrations'
@@ -39,5 +39,7 @@ class InstallMakeCommand extends EnvironmentCommand
         $this->info('✔️  Module Workspace tables migrated');
 
         $this->comment('hanafalah/module-workspace installed successfully.');
+
+        $this->call('module-regional:install');
     }
 }
