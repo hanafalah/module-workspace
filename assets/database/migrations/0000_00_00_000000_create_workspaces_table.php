@@ -1,5 +1,6 @@
 <?php
 
+use Hanafalah\ModuleWorkspace\Enums\Workspace\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -30,8 +31,8 @@ return new class extends Migration
                 $table->string('uuid',36);
                 $table->string('name',50)->nullable(false);
                 $table->json('props')->nullable(true);
-                $table->unsignedTinyInteger('status')->default(WorkspaceStatus::DRAFT->value)
-                      ->comment('See '.addslashes(WorkspaceStatus::class));
+                $table->unsignedTinyInteger('status')->default(Status::DRAFT->value)
+                      ->comment('See '.addslashes(Status::class));
                 $table->timestamps();
                 $table->softDeletes();
             });
