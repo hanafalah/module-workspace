@@ -3,7 +3,6 @@
 namespace Hanafalah\ModuleWorkspace\Data;
 
 use Hanafalah\LaravelSupport\Supports\Data;
-use Spatie\LaravelData\Attributes\Computed;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\Validation\Email;

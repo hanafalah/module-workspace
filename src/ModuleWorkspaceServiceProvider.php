@@ -11,13 +11,7 @@ class ModuleWorkspaceServiceProvider extends BaseServiceProvider
         $this->registerMainClass(ModuleWorkspace::class)
             ->registerCommandService(Providers\CommandServiceProvider::class)
             ->registers([
-                '*',
-                'Services' => function () {
-                    $this->binds([
-                        Contracts\ModuleWorkspace::class => ModuleWorkspace::class,
-                        Contracts\Workspace::class       => Schemas\Workspace::class
-                    ]);
-                }
+                '*'
             ]);                                
     }
 
