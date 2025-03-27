@@ -10,8 +10,6 @@ use Hanafalah\ModuleWorkspace\Data\WorkspaceData;
 
 class Workspace extends PackageManagement implements ContractsWorkspace
 {
-    protected array $__guard        = ['uuid'];
-    protected array $__add          = ['name', 'status'];
     protected string $__entity      = 'Workspace';
     public static $workspace_model;
 
