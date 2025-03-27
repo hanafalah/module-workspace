@@ -1,10 +1,10 @@
 <?php
 
-namespace Hanafalah\ModuleWorkspace\Contracts;
+namespace Hanafalah\ModuleWorkspace\Contracts\Schemas;
 
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Hanafalah\LaravelSupport\Contracts\DataManagement;
+use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 use Hanafalah\ModuleWorkspace\Data\WorkspaceData;
 
 /**

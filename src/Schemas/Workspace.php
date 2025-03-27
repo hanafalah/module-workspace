@@ -5,7 +5,7 @@ namespace Hanafalah\ModuleWorkspace\Schemas;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
-use Hanafalah\ModuleWorkspace\Contracts\Workspace as ContractsWorkspace;
+use Hanafalah\ModuleWorkspace\Contracts\Schemas\Workspace as ContractsWorkspace;
 use Hanafalah\ModuleWorkspace\Data\WorkspaceData;
 
 class Workspace extends PackageManagement implements ContractsWorkspace
@@ -25,7 +25,7 @@ class Workspace extends PackageManagement implements ContractsWorkspace
 
     public function storeWorkspace(?WorkspaceData $workspace_dto = null): array{
         return $this->transaction(function() use ($workspace_dto){
-            return $this->showWorkspace($this->prepareStoreWorkspace($workspace_dto ?? WorkspaceData::from(request()->all())));
+            return $this->showWorkspace($this->prepareStoreWorkspace($workspace_dto ?? $this->requestDTO(WorkspaceData::class)));
         });
     }
 
@@ -72,8 +72,7 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         return static::$workspace_model = $model;
     }
 
-    public function showWorkspace(?Model $model = null): array
-    {
+    public function showWorkspace(?Model $model = null): array{
         return $this->showEntityResource(function() use ($model){
             return $this->prepareShowWorkspace($model);
         });

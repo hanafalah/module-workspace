@@ -2,7 +2,6 @@
 
 namespace Hanafalah\ModuleWorkspace;
 
-use Closure;
 use Hanafalah\LaravelSupport\Providers\BaseServiceProvider;
 
 class ModuleWorkspaceServiceProvider extends BaseServiceProvider
@@ -19,7 +18,7 @@ class ModuleWorkspaceServiceProvider extends BaseServiceProvider
                         Contracts\Workspace::class       => Schemas\Workspace::class
                     ]);
                 }
-            ]);
+            ]);                                
     }
 
     protected function dir(): string

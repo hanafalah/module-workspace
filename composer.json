@@ -3,7 +3,10 @@
     "autoload": {
         "psr-4": {
             "Hanafalah\\ModuleWorkspace\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "authors": [
         {
