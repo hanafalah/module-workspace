@@ -34,15 +34,16 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         $model = $this->WorkspaceModel()->updateOrCreate($guard ?? [], [
             'name' => $workspace_dto->name, 'status' => $workspace_dto->status
         ]);
-        $model->fill($workspace_dto->props->toArray());
-        $model->save();
-
-        if (isset($workspace_dto->address)) {
-            $address             = &$workspace_dto->address;
+        if (isset($workspace_dto->props->setting->address)) {
+            $address             = &$workspace_dto->props->setting->address;
             $address->model_type = $model->getMorphClass();
             $address->model_id   = $model->getKey(); 
-            $this->schemaContract('address')->prepareStoreAddress($address);
+            $address_model = $this->schemaContract('address')->prepareStoreAddress($address);
+            $address->id = $address_model->getKey();
+            unset($address->props);
         }
+        $model->fill($workspace_dto->props->toArray());
+        $model->save();
         static::$workspace_model = $model;
         $this->forgetTags('workspace');
         return $model;

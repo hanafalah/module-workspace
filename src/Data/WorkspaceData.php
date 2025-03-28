@@ -20,10 +20,6 @@ class WorkspaceData extends Data{
         #[MapInputName('status')]
         #[MapName('status')]
         public ?string $status = null,
-
-        #[MapInputName('address')]
-        #[MapName('address')]
-        public ?AddressData $address = null,
         
         #[MapInputName('props')]
         #[MapName('props')]
