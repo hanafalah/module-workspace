@@ -2,10 +2,10 @@
 
 namespace Hanafalah\ModuleWorkspace\Enums\Workspace;
 
-enum Status: int
+enum Status: string
 {
-    case ACTIVE    = 1;
-    case INACTIVE  = 2;
-    case SUPSENDED = 3;
-    case DRAFT     = 0;
+    case ACTIVE    = 'ACTIVE';
+    case INACTIVE  = 'INACTIVE';
+    case SUPSENDED = 'SUPSENDED';
+    case DRAFT     = 'DRAFT';
 }

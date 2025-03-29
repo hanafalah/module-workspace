@@ -4,7 +4,6 @@ use Hanafalah\ModuleWorkspace\Enums\Workspace\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Hanafalah\ModuleWorkspace\Enums\Workspace\WorkspaceStatus;
 use Hanafalah\ModuleWorkspace\Models\Workspace\Workspace;
 
 return new class extends Migration
@@ -31,8 +30,7 @@ return new class extends Migration
                 $table->string('uuid',36);
                 $table->string('name',50)->nullable(false);
                 $table->json('props')->nullable(true);
-                $table->unsignedTinyInteger('status')->default(Status::DRAFT->value)
-                      ->comment('See '.addslashes(Status::class));
+                $table->enum('status',array_column(Status::cases(),'value'))->default(Status::DRAFT->value);
                 $table->timestamps();
                 $table->softDeletes();
             });
