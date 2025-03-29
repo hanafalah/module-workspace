@@ -3,10 +3,12 @@
 namespace Hanafalah\ModuleWorkspace\Data;
 
 use Hanafalah\LaravelSupport\Supports\Data;
+use Hanafalah\ModuleWorkspace\Contracts\Data\WorkspacePropsData as DataWorkspacePropsData;
+use Hanafalah\ModuleWorkspace\Contracts\Data\WorkspaceSettingData;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 
-class WorkspacePropsData extends Data{
+class WorkspacePropsData extends Data implements DataWorkspacePropsData{
     public function __construct(
         #[MapInputName('setting')]
         #[MapName('setting')]

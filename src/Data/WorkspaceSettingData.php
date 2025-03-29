@@ -4,11 +4,12 @@ namespace Hanafalah\ModuleWorkspace\Data;
 
 use Hanafalah\LaravelSupport\Supports\Data;
 use Hanafalah\ModuleRegional\Data\AddressData;
+use Hanafalah\ModuleWorkspace\Contracts\Data\WorkspaceSettingData as DataWorkspaceSettingData;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\Validation\Email;
 
-class WorkspaceSettingData extends Data{
+class WorkspaceSettingData extends Data implements DataWorkspaceSettingData{
     public function __construct(
         #[MapInputName('address')]
         #[MapName('address')]
