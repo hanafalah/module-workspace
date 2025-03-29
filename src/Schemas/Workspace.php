@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
 use Hanafalah\ModuleWorkspace\Contracts\Schemas\Workspace as ContractsWorkspace;
-use Hanafalah\ModuleWorkspace\Data\WorkspaceData;
+use Hanafalah\ModuleWorkspace\Contracts\Data\WorkspaceData;
 
 class Workspace extends PackageManagement implements ContractsWorkspace
 {
@@ -42,7 +42,7 @@ class Workspace extends PackageManagement implements ContractsWorkspace
             $address->id = $address_model->getKey();
             unset($address->props);
         }
-        $model->fill($workspace_dto->props->toArray());
+        foreach ($workspace_dto->props as $key => $value) $model->{$key} = $value;
         $model->save();
         static::$workspace_model = $model;
         $this->forgetTags('workspace');

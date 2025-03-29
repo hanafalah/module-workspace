@@ -5,7 +5,7 @@ namespace Hanafalah\ModuleWorkspace\Contracts\Schemas;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
-use Hanafalah\ModuleWorkspace\Data\WorkspaceData;
+use Hanafalah\ModuleWorkspace\Contracts\Data\WorkspaceData;
 
 /**
  * @see \Hanafalah\ModuleWorkspace\Models\Workspace
