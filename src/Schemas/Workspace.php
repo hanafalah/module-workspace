@@ -45,7 +45,7 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         foreach ($workspace_dto->props as $key => $value) $model->{$key} = $value;
         $model->save();
         static::$workspace_model = $model;
-        $this->forgetTags('workspace');
+        // $this->forgetTags('workspace');
         return $model;
     }
 
