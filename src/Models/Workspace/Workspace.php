@@ -4,7 +4,6 @@ namespace Hanafalah\ModuleWorkspace\Models\Workspace;
 
 use Hanafalah\LaravelHasProps\Concerns\HasProps;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Hanafalah\LaravelSupport\Concerns\Support\HasEncoding;
 use Hanafalah\LaravelSupport\Models\BaseModel;
 use Hanafalah\ModuleRegional\Concerns\HasAddress;
 use Hanafalah\ModuleWorkspace\Enums;
@@ -13,7 +12,7 @@ use Hanafalah\ModuleWorkspace\Resources\Workspace\ViewWorkspace;
 
 class Workspace extends BaseModel
 {
-    use SoftDeletes, HasProps, HasEncoding, HasAddress;
+    use SoftDeletes, HasProps, HasAddress;
 
     protected $list = [
         'id', 'uuid', 'name', 'status', 'props'
