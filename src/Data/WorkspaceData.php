@@ -27,9 +27,9 @@ class WorkspaceData extends Data implements DataWorkspaceData{
         #[MapName('props')]
         public ?WorkspacePropsData $props = null
     ){
-        if (isset($this->uuid)){
-            $workspace = $this->WorkspaceModel()->uuid($this->uuid)->firstOrFail();
-            $this->status = $workspace->status;
+        if (isset($this->uuid) && !isset($this->status)){
+            $workspace = $this->WorkspaceModel()->uuid($this->uuid)->first();
+            $this->status = $workspace->status ?? Status::DRAFT->value;
         }else{
             $this->status = Status::DRAFT->value;
         }
