@@ -19,7 +19,8 @@ class ViewWorkspace extends ApiResource
         $arr = [
             'id'        => $this->id,
             'uuid'      => $this->uuid,
-            'name'      => $this->name
+            'name'      => $this->name,
+            'phone'     => $this->phone
         ];
 
         return $arr;

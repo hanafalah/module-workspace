@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Hanafalah\LaravelSupport\Models\BaseModel;
 use Hanafalah\ModuleRegional\Concerns\HasAddress;
 use Hanafalah\ModuleWorkspace\Enums;
+use Hanafalah\ModuleWorkspace\Resources\Workspace\SettingWorkspace;
 use Hanafalah\ModuleWorkspace\Resources\Workspace\ShowWorkspace;
 use Hanafalah\ModuleWorkspace\Resources\Workspace\ViewWorkspace;
 
@@ -36,5 +37,15 @@ class Workspace extends BaseModel
 
     public function getViewResource(){
         return ViewWorkspace::class;
+    }
+
+    public function getSettingResource(){
+        return SettingWorkspace::class;
+    }
+
+    public function toSettingApi(){
+        return ($this->getSettingResource() !== null)
+            ? new ($this->getSettingResource())($this->setting)
+            : $this->toArray();
     }
 }

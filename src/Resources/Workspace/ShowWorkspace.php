@@ -20,7 +20,7 @@ class ShowWorkspace extends ViewWorkspace
             'address' => $this->relationValidation('address', function () {
                 return $this->address->toShowApi();
             }),
-            'setting' => $this->setting ?? null
+            'setting' => $this->toSettingApi()
         ];
         $arr = $this->mergeArray(parent::toArray($request), $arr);
         return $arr;
