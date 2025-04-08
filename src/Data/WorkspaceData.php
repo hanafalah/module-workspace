@@ -10,28 +10,29 @@ use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 
 class WorkspaceData extends Data implements DataWorkspaceData{
-    public function __construct(
-        #[MapInputName('uuid')]
-        #[MapName('uuid')]
-        public ?string $uuid = null,
+    #[MapInputName('uuid')]
+    #[MapName('uuid')]
+    public ?string $uuid = null;
     
-        #[MapInputName('name')]
-        #[MapName('name')]
-        public string $name,
+    #[MapInputName('name')]
+    #[MapName('name')]
+    public string $name;
     
-        #[MapInputName('status')]
-        #[MapName('status')]
-        public ?string $status = null,
+    #[MapInputName('status')]
+    #[MapName('status')]
+    public ?string $status = null;
         
-        #[MapInputName('props')]
-        #[MapName('props')]
-        public ?WorkspacePropsData $props = null
-    ){
-        if (isset($this->uuid) && !isset($this->status)){
-            $workspace = $this->WorkspaceModel()->uuid($this->uuid)->first();
-            $this->status = $workspace->status ?? Status::DRAFT->value;
+    #[MapInputName('props')]
+    #[MapName('props')]
+    public ?WorkspacePropsData $props = null;
+
+    public static function after(WorkspaceData $data): WorkspaceData{
+        if (isset($data->uuid) && !isset($data->status)){
+            $workspace = self::new()->WorkspaceModel()->uuid($data->uuid)->first();
+            $data->status = $workspace->status ?? Status::DRAFT->value;
         }else{
-            $this->status = Status::DRAFT->value;
+            $data->status = Status::DRAFT->value;
         }
+        return $data;
     }
 }

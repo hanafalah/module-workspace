@@ -9,9 +9,7 @@ use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 
 class WorkspacePropsData extends Data implements DataWorkspacePropsData{
-    public function __construct(
-        #[MapInputName('setting')]
-        #[MapName('setting')]
-        public ?WorkspaceSettingData $setting = null,
-    ){}
+    #[MapInputName('setting')]
+    #[MapName('setting')]
+    public ?WorkspaceSettingData $setting = null;
 }
