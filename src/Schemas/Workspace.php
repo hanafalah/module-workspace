@@ -38,8 +38,8 @@ class Workspace extends PackageManagement implements ContractsWorkspace
             $address             = &$workspace_dto->props->setting->prop_address;
             $address->model_type = $model->getMorphClass();
             $address->model_id   = $model->getKey(); 
-            $address_model = $this->schemaContract('address')->prepareStoreAddress($address);
-            $address->id = $address_model->getKey();
+            $address_model       = $this->schemaContract('address')->prepareStoreAddress($address);
+            $address->id         = $address_model->getKey();
             unset($address->props);
         }
         foreach ($workspace_dto->props as $key => $value) $model->{$key} = $value;
