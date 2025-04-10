@@ -49,7 +49,7 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         return $model;
     }
 
-    protected function showUsingRelation(){
+    protected function showUsingRelation(): array{
         return ['address'];
     }
 
