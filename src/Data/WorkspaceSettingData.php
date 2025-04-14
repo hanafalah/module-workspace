@@ -23,6 +23,10 @@ class WorkspaceSettingData extends Data implements DataWorkspaceSettingData{
     #[MapName('phone')]
     public ?string $phone = null;
 
+    #[MapInputName('logo')]
+    #[MapName('logo')]
+    public mixed $logo = null;
+
     public static function after(WorkspaceSettingData $data): WorkspaceSettingData{
         $data->phone = $data->phone ? preg_replace('/\D/', '', $data->phone) : null;
         return $data;

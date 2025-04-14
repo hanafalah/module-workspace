@@ -31,6 +31,10 @@ class Workspace extends BaseModel
         });
     }
 
+    public function showUsingRelation(): array{
+        return ['address'];
+    }
+
     public function getShowResource(){
         return ShowWorkspace::class;
     }
