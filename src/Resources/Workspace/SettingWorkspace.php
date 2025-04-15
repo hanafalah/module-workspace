@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class SettingWorkspace extends ApiResource{
     public function toArray(Request $request): array{
-$arr = [
+        $arr = [
             "email"    => $this['email'] ?? null,
             "owner_id" => $this['owner_id'] ?? null,
             "owner"    => [
@@ -28,7 +28,8 @@ $arr = [
                 "district_id"    => $this['address']['district_id'] ?? null,
                 "province_id"    => $this['address']['province_id'] ?? null,
                 "subdistrict_id" => $this['address']['subdistrict_id'] ?? null
-            ]
+            ],
+            'logo'               => $this['logo'] ?? null
         ];
         return $arr;
     }

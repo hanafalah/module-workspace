@@ -3,6 +3,7 @@
 namespace Hanafalah\ModuleWorkspace\Models\Workspace;
 
 use Hanafalah\LaravelHasProps\Concerns\HasProps;
+use Hanafalah\LaravelSupport\Concerns\Support\HasFileUpload;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Hanafalah\LaravelSupport\Models\BaseModel;
 use Hanafalah\ModuleRegional\Concerns\HasAddress;
@@ -13,7 +14,7 @@ use Hanafalah\ModuleWorkspace\Resources\Workspace\ViewWorkspace;
 
 class Workspace extends BaseModel
 {
-    use SoftDeletes, HasProps, HasAddress;
+    use SoftDeletes, HasProps, HasAddress, HasFileUpload;
 
     protected $list = [
         'id', 'uuid', 'name', 'status', 'props'
@@ -29,6 +30,17 @@ class Workspace extends BaseModel
         static::creating(function ($query) {
             if (!isset($query->status)) $query->status = Enums\Workspace\Status::ACTIVE->value;
         });
+    }
+
+    protected function getFileNameAttribute(): string|callable{
+        return function(){
+            return $this->setting['logo'];
+        };
+    }
+
+    protected function getFilePath(? string $path = null): string{
+        $path ??= 'WORKSPACES/'.$this->uuid;
+        return $this->storagePath($path);
     }
 
     public function showUsingRelation(): array{

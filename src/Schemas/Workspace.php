@@ -42,19 +42,24 @@ class Workspace extends PackageManagement implements ContractsWorkspace
             $address->id         = $address_model->getKey();
             unset($address->props);
         }
-        foreach ($workspace_dto->props as $key => $value) $model->{$key} = $value;
+        if (isset($workspace_dto->props->setting->logo)) {
+            $logo = &$workspace_dto->props->setting->logo;
+            $logo = $model->setupFile($logo);
+        }
+        // $license = &$workspace_dto->props->setting->license;
+        // $license = $model->setupFile($license);
+        // unset($workspace_dto->props->setting->logo, $workspace_dto->props->setting->license);
+        foreach ($workspace_dto->props as $key => $value) {
+            $model->{$key} = $value;
+        }
         $model->save();
         static::$workspace_model = $model;
-        // $this->forgetTags('workspace');
+        $this->forgetTags('workspace');
         return $model;
     }
 
     protected function showUsingRelation(): array{
         return ['address'];
-    }
-
-    public function getWorkspace(): mixed{
-        return static::$workspace_model;
     }
 
     public function prepareShowWorkspace(?Model $model = null, ? array $attributes = null): ?Model{
@@ -69,12 +74,6 @@ class Workspace extends PackageManagement implements ContractsWorkspace
             $model->load($this->showUsingRelation());
         }
         return static::$workspace_model = $model;
-    }
-
-    public function showWorkspace(?Model $model = null): array{
-        return $this->showEntityResource(function() use ($model){
-            return $this->prepareShowWorkspace($model);
-        });
     }
 
     public function workspace(mixed $conditionals = null): Builder{
