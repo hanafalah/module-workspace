@@ -32,7 +32,8 @@ class Workspace extends PackageManagement implements ContractsWorkspace
             $guard = ['uuid' => $workspace_dto->uuid];
         }
         $model = $this->WorkspaceModel()->updateOrCreate($guard ?? [], [
-            'name' => $workspace_dto->name, 'status' => $workspace_dto->status
+            'name' => $workspace_dto->name, 
+            'status' => $workspace_dto->status
         ]);
         if (isset($workspace_dto->props->setting->prop_address)) {
             $address             = &$workspace_dto->props->setting->prop_address;
