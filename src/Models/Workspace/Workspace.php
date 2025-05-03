@@ -4,6 +4,7 @@ namespace Hanafalah\ModuleWorkspace\Models\Workspace;
 
 use Hanafalah\LaravelHasProps\Concerns\HasProps;
 use Hanafalah\LaravelSupport\Concerns\Support\HasFileUpload;
+use Hanafalah\ModuleWorkspace\Events;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Hanafalah\LaravelSupport\Models\BaseModel;
 use Hanafalah\ModuleRegional\Concerns\HasAddress;
@@ -64,4 +65,15 @@ class Workspace extends BaseModel
             ? new ($this->getSettingResource())($this->setting)
             : $this->toArray();
     }
+
+    protected $dispatchesEvents = [
+        'saving'   => Events\SavingWorkspace::class,
+        'saved'    => Events\WorkspaceSaved::class,
+        'creating' => Events\CreatingWorkspace::class,
+        'created'  => Events\WorkspaceCreated::class,
+        'updating' => Events\UpdatingWorkspace::class,
+        'updated'  => Events\WorkspaceUpdated::class,
+        'deleting' => Events\DeletingWorkspace::class,
+        'deleted'  => Events\WorkspaceDeleted::class,
+    ];
 }
