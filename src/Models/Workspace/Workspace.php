@@ -60,6 +60,8 @@ class Workspace extends BaseModel
         return SettingWorkspace::class;
     }
 
+    public function tenant(){return $this->morphOneModel('Tenant','reference');}
+
     public function toSettingApi(){
         return ($this->getSettingResource() !== null)
             ? new ($this->getSettingResource())($this->setting)
