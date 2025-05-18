@@ -12,14 +12,18 @@ use Hanafalah\ModuleWorkspace\Enums;
 use Hanafalah\ModuleWorkspace\Resources\Workspace\SettingWorkspace;
 use Hanafalah\ModuleWorkspace\Resources\Workspace\ShowWorkspace;
 use Hanafalah\ModuleWorkspace\Resources\Workspace\ViewWorkspace;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class Workspace extends BaseModel
 {
-    use SoftDeletes, HasProps, HasAddress, HasFileUpload;
-
+    use HasUlids, SoftDeletes, HasProps, HasAddress, HasFileUpload;
+    
+    public $incrementing  = false;
+    protected $keyType    = 'string';
+    protected $primaryKey = 'id';
     protected $list = [
         'id', 'uuid', 'name', 'status', 'props'
-    ];
+    ];  
 
     protected $casts = [
         'uuid' => 'string',

@@ -18,10 +18,10 @@ use Hanafalah\ModuleWorkspace\Contracts\Data\WorkspaceData;
  * @method array viewWorkspaceList()
  * @method LengthAwarePaginator prepareViewWorkspacePaginate(PaginateData $paginate_dto)
  * @method array viewWorkspacePaginate(?PaginateData $paginate_dto = null)
+ * @method Builder workspace(mixed $conditionals = null)
  */
 interface Workspace extends DataManagement
 {
     public function storeWorkspace(?WorkspaceData $workspace_dto = null): array;
     public function prepareStoreWorkspace(WorkspaceData $workspace_dto): Model;
-    public function workspace(mixed $conditionals = null): Builder;
 }

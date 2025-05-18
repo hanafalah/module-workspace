@@ -28,13 +28,17 @@ class Workspace extends PackageManagement implements ContractsWorkspace
     }
 
     public function prepareStoreWorkspace(WorkspaceData $workspace_dto): Model{
-        if (isset($workspace_dto->uuid)){
-            $guard = ['uuid' => $workspace_dto->uuid];
-        }
-        $model = $this->WorkspaceModel()->updateOrCreate($guard ?? [], [
+        $add = [
             'name' => $workspace_dto->name, 
             'status' => $workspace_dto->status
-        ]);
+        ];
+        if (isset($workspace_dto->uuid)){
+            $guard = ['uuid' => $workspace_dto->uuid];
+            $create = [$guard,$add];
+        }else{
+            $create = [$add];
+        }
+        $model = $this->WorkspaceModel()->updateOrCreate(...$create);
         if (isset($workspace_dto->props->setting->prop_address)) {
             $address             = &$workspace_dto->props->setting->prop_address;
             $address->model_type = $model->getMorphClass();
@@ -50,17 +54,11 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         // $license = &$workspace_dto->props->setting->license;
         // $license = $model->setupFile($license);
         // unset($workspace_dto->props->setting->logo, $workspace_dto->props->setting->license);
-        foreach ($workspace_dto->props as $key => $value) {
-            $model->{$key} = $value;
-        }
+        $this->fillingProps($model,$workspace_dto->props);
         $model->save();
         static::$workspace_model = $model;
         $this->forgetTags('workspace');
         return $model;
-    }
-
-    protected function showUsingRelation(): array{
-        return ['address'];
     }
 
     public function prepareShowWorkspace(?Model $model = null, ? array $attributes = null): ?Model{
@@ -75,10 +73,5 @@ class Workspace extends PackageManagement implements ContractsWorkspace
             $model->load($this->showUsingRelation());
         }
         return static::$workspace_model = $model;
-    }
-
-    public function workspace(mixed $conditionals = null): Builder{
-        $this->booting();
-        return $this->WorkspaceModel()->withParameters()->conditionals($this->mergeCondition($conditionals ?? []));
     }
 }
