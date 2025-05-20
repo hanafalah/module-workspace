@@ -15,6 +15,7 @@ class SettingWorkspace extends ApiResource{
                 "name" => $this['owner']['name'] ?? null
             ],
             "phone"              => $this['phone'] ?? null,
+            "timezone"           => $this['timezone'] ?? 'Asia/Jakarta',
             "address"            => [
                 "id"             => $this['address']['id'] ?? null,
                 "flag"           => $this['address']['flag'] ?? null,
