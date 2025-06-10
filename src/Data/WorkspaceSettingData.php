@@ -10,20 +10,29 @@ use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\Validation\Email;
 
 class WorkspaceSettingData extends Data implements DataWorkspaceSettingData{
-    public function __construct(
-        #[MapInputName('address')]
-        #[MapName('address')]
-        public ?AddressData $address = null,
+    #[MapInputName('address')]
+    #[MapName('address')]
+    public ?AddressData $address = null;
 
-        #[Email]
-        #[MapInputName('email')]
-        #[MapName('email')]
-        public ?string $email = null,
+    #[Email]
+    #[MapInputName('email')]
+    #[MapName('email')]
+    public ?string $email = null;
     
-        #[MapInputName('phone')]
-        #[MapName('phone')]
-        public ?string $phone = null,
-    ){
-        $this->phone = $phone ? preg_replace('/\D/', '', $phone) : null;
+    #[MapInputName('phone')]
+    #[MapName('phone')]
+    public ?string $phone = null;
+
+    #[MapInputName('logo')]
+    #[MapName('logo')]
+    public mixed $logo = null;
+
+    #[MapInputName('license')]
+    #[MapName('license')]
+    public mixed $license = null;
+
+    public static function after(WorkspaceSettingData $data): WorkspaceSettingData{
+        $data->phone = $data->phone ? preg_replace('/\D/', '', $data->phone) : null;
+        return $data;
     }
 }

@@ -17,10 +17,10 @@ class ShowWorkspace extends ViewWorkspace
     public function toArray(Request $request): array
     {
         $arr = [
-            'address' => $this->relationValidation('address', function () {
-                return $this->address->toShowApi();
-            }),
-            'setting' => $this->setting ?? null
+            'setting' => $this->toSettingApi()
+            // 'address' => $this->relationValidation('address', function () {
+            //     return $this->address->toShowApi();
+            // }),
         ];
         $arr = $this->mergeArray(parent::toArray($request), $arr);
         return $arr;

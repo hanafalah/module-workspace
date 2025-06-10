@@ -28,33 +28,37 @@ class Workspace extends PackageManagement implements ContractsWorkspace
     }
 
     public function prepareStoreWorkspace(WorkspaceData $workspace_dto): Model{
+        $add = [
+            'name' => $workspace_dto->name, 
+            'status' => $workspace_dto->status
+        ];
         if (isset($workspace_dto->uuid)){
             $guard = ['uuid' => $workspace_dto->uuid];
+            $create = [$guard,$add];
+        }else{
+            $create = [$add];
         }
-        $model = $this->WorkspaceModel()->updateOrCreate($guard ?? [], [
-            'name' => $workspace_dto->name, 'status' => $workspace_dto->status
-        ]);
+        $model = $this->WorkspaceModel()->updateOrCreate(...$create);
         if (isset($workspace_dto->props->setting->address)) {
             $address             = &$workspace_dto->props->setting->address;
             $address->model_type = $model->getMorphClass();
             $address->model_id   = $model->getKey(); 
-            $address_model = $this->schemaContract('address')->prepareStoreAddress($address);
-            $address->id = $address_model->getKey();
+            $address_model       = $this->schemaContract('address')->prepareStoreAddress($address);
+            $address->id         = $address_model->getKey();
             unset($address->props);
         }
-        foreach ($workspace_dto->props as $key => $value) $model->{$key} = $value;
+        if (isset($workspace_dto->props->setting->logo)) {
+            $logo = &$workspace_dto->props->setting->logo;
+            $logo = $model->setupFile($logo);
+        }
+        // $license = &$workspace_dto->props->setting->license;
+        // $license = $model->setupFile($license);
+        // unset($workspace_dto->props->setting->logo, $workspace_dto->props->setting->license);
+        $this->fillingProps($model,$workspace_dto->props);
         $model->save();
         static::$workspace_model = $model;
         $this->forgetTags('workspace');
         return $model;
-    }
-
-    protected function showUsingRelation(){
-        return ['address'];
-    }
-
-    public function getWorkspace(): mixed{
-        return static::$workspace_model;
     }
 
     public function prepareShowWorkspace(?Model $model = null, ? array $attributes = null): ?Model{
@@ -69,16 +73,5 @@ class Workspace extends PackageManagement implements ContractsWorkspace
             $model->load($this->showUsingRelation());
         }
         return static::$workspace_model = $model;
-    }
-
-    public function showWorkspace(?Model $model = null): array{
-        return $this->showEntityResource(function() use ($model){
-            return $this->prepareShowWorkspace($model);
-        });
-    }
-
-    public function workspace(mixed $conditionals = null): Builder{
-        $this->booting();
-        return $this->WorkspaceModel()->withParameters()->conditionals($this->mergeCondition($conditionals ?? []));
     }
 }
