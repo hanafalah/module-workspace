@@ -2,7 +2,7 @@
 
 namespace Hanafalah\ModuleWorkspace\Contracts\Schemas;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 use Hanafalah\ModuleWorkspace\Contracts\Data\WorkspaceData;

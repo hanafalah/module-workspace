@@ -11,8 +11,8 @@ use Spatie\LaravelData\Attributes\Validation\Email;
 
 class WorkspaceSettingData extends Data implements DataWorkspaceSettingData{
     #[MapInputName('address')]
-    #[MapName('prop_address')]
-    public ?AddressData $prop_address = null;
+    #[MapName('address')]
+    public ?AddressData $address = null;
 
     #[Email]
     #[MapInputName('email')]
