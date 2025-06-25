@@ -9,6 +9,7 @@ class SettingWorkspace extends ApiResource{
     public function toArray(Request $request): array{
         $arr = [
             "email"    => $this['email'] ?? null,
+            'stakeholder' => $this['stakeholder'] ?? null,
             "owner_id" => $this['owner_id'] ?? null,
             "owner"    => [
                 "id"   => $this['owner']['id'] ?? null,

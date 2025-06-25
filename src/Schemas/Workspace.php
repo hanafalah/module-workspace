@@ -21,15 +21,9 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         ]
     ];
 
-    public function storeWorkspace(?WorkspaceData $workspace_dto = null): array{
-        return $this->transaction(function() use ($workspace_dto){
-            return $this->showWorkspace($this->prepareStoreWorkspace($workspace_dto ?? $this->requestDTO(WorkspaceData::class)));
-        });
-    }
-
     public function prepareStoreWorkspace(WorkspaceData $workspace_dto): Model{
         $add = [
-            'name' => $workspace_dto->name, 
+            'name'   => $workspace_dto->name, 
             'status' => $workspace_dto->status
         ];
         if (isset($workspace_dto->uuid)){
@@ -38,7 +32,7 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         }else{
             $create = [$add];
         }
-        $model = $this->WorkspaceModel()->updateOrCreate(...$create);
+        $model = $this->usingEntity()->updateOrCreate(...$create);
         if (isset($workspace_dto->props->setting->address)) {
             $address             = &$workspace_dto->props->setting->address;
             $address->model_type = $model->getMorphClass();
@@ -56,22 +50,20 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         // unset($workspace_dto->props->setting->logo, $workspace_dto->props->setting->license);
         $this->fillingProps($model,$workspace_dto->props);
         $model->save();
-        static::$workspace_model = $model;
-        $this->forgetTags('workspace');
-        return $model;
-    }
-
-    public function prepareShowWorkspace(?Model $model = null, ? array $attributes = null): ?Model{
-        $attributes ??= request()->all();
-
-        $model ??= $this->getWorkspace();
-        if (!isset($model)){
-            $uuid = request()->uuid;
-            if (!isset($uuid)) throw new \Exception('No uuid provided', 422);
-            $model = $this->workspace()->with($this->showUsingRelation())->uuid($uuid)->firstOrFail();
-        }else{
-            $model->load($this->showUsingRelation());
-        }
         return static::$workspace_model = $model;
     }
+
+    // public function prepareShowWorkspace(?Model $model = null, ? array $attributes = null): ?Model{
+    //     $attributes ??= request()->all();
+
+    //     $model ??= $this->getWorkspace();
+    //     if (!isset($model)){
+    //         $uuid = request()->uuid;
+    //         if (!isset($uuid)) throw new \Exception('No uuid provided', 422);
+    //         $model = $this->workspace()->with($this->showUsingRelation())->uuid($uuid)->firstOrFail();
+    //     }else{
+    //         $model->load($this->showUsingRelation());
+    //     }
+    //     return static::$workspace_model = $model;
+    // }
 }

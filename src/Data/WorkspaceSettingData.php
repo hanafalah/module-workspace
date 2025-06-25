@@ -4,10 +4,12 @@ namespace Hanafalah\ModuleWorkspace\Data;
 
 use Hanafalah\LaravelSupport\Supports\Data;
 use Hanafalah\ModuleRegional\Data\AddressData;
+use Hanafalah\ModuleWorkspace\Contracts\Data\StakeholderData;
 use Hanafalah\ModuleWorkspace\Contracts\Data\WorkspaceSettingData as DataWorkspaceSettingData;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\Validation\Email;
+use Illuminate\Support\Str;
 
 class WorkspaceSettingData extends Data implements DataWorkspaceSettingData{
     #[MapInputName('address')]
@@ -31,8 +33,17 @@ class WorkspaceSettingData extends Data implements DataWorkspaceSettingData{
     #[MapName('license')]
     public mixed $license = null;
 
-    public static function after(WorkspaceSettingData $data): WorkspaceSettingData{
+    #[MapInputName('stakeholder')]
+    #[MapName('stakeholder')]
+    public ?StakeholderData $stakeholder = null;
+
+    #[MapInputName('props')]
+    #[MapName('props')]
+    public ?array $props = null;
+
+    public static function after(self $data): self{
         $data->phone = $data->phone ? preg_replace('/\D/', '', $data->phone) : null;
         return $data;
     }
+    
 }

@@ -25,5 +25,6 @@ return [
     ],
     'commands' => [
         Commands\InstallMakeCommand::class
-    ]
+    ],
+    'stakeholder'  => 'Employee',
 ];
