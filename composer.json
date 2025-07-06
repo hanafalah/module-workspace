@@ -5,7 +5,7 @@
             "Hanafalah\\ModuleWorkspace\\": "src/"
         },
         "files": [
-            "src/helpers.php"
+            "src/helper.php"
         ]
     },
     "authors": [
