@@ -27,7 +27,6 @@ class WorkspaceServiceProvider extends ServiceProvider
             ],
             Events\WorkspaceCreated::class => [
                 function(){
-                    dd();
                 }
             ],
             Events\UpdatingWorkspace::class => [
