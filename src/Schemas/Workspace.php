@@ -11,7 +11,7 @@ use Hanafalah\ModuleWorkspace\Contracts\Data\WorkspaceData;
 class Workspace extends PackageManagement implements ContractsWorkspace
 {
     protected string $__entity      = 'Workspace';
-    public static $workspace_model;
+    public $workspace_model;
 
     protected array $__cache = [
         'show' => [
@@ -50,7 +50,7 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         // unset($workspace_dto->props->setting->logo, $workspace_dto->props->setting->license);
         $this->fillingProps($model,$workspace_dto->props);
         $model->save();
-        return static::$workspace_model = $model;
+        return $this->workspace_model = $model;
     }
 
     // public function prepareShowWorkspace(?Model $model = null, ? array $attributes = null): ?Model{
@@ -64,6 +64,6 @@ class Workspace extends PackageManagement implements ContractsWorkspace
     //     }else{
     //         $model->load($this->showUsingRelation());
     //     }
-    //     return static::$workspace_model = $model;
+    //     return $this->workspace_model = $model;
     // }
 }
