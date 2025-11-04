@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class SettingWorkspace extends ApiResource{
     public function toArray(Request $request): array{
-        $arr = [
+        $arr = [            
             "email"    => $this['email'] ?? null,
             'stakeholder' => $this['stakeholder'] ?? null,
             "owner_id" => $this['owner_id'] ?? null,
