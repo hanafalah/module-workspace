@@ -3,7 +3,6 @@
 namespace Hanafalah\ModuleWorkspace\Resources\Workspace;
 
 use Illuminate\Http\Request;
-use Hanafalah\ModuleRegional\Resources\Address\ShowAddress;
 
 class ShowWorkspace extends ViewWorkspace
 {
