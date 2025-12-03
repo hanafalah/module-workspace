@@ -13,11 +13,19 @@ class WorkspaceData extends Data implements DataWorkspaceData{
     #[MapInputName('uuid')]
     #[MapName('uuid')]
     public ?string $uuid = null;
+
+    #[MapInputName('workspace_model')]
+    #[MapName('workspace_model')]
+    public ?object $workspace_model = null;
     
     #[MapInputName('name')]
     #[MapName('name')]
     public string $name;
-    
+
+    #[MapInputName('owner_id')]
+    #[MapName('owner_id')]
+    public ?string $owner_id = null;
+
     #[MapInputName('status')]
     #[MapName('status')]
     public ?string $status = null;
@@ -33,6 +41,7 @@ class WorkspaceData extends Data implements DataWorkspaceData{
         }else{
             $data->status = Status::DRAFT->value;
         }
+        
         return $data;
     }
 }

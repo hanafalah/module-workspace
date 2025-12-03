@@ -17,14 +17,15 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         'show' => [
             'name'     => 'workspace',
             'tags'     => ['workspace', 'workspace-show'],
-            'forever'  => true
+            'duration' => 24*60 
         ]
     ];
 
-    public function prepareStoreWorkspace(WorkspaceData $workspace_dto): Model{
+    protected function prepareUpdateCreate(WorkspaceData $workspace_dto){
         $add = [
             'name'   => $workspace_dto->name, 
-            'status' => $workspace_dto->status
+            'status' => $workspace_dto->status,
+            'owner_id' => $workspace_dto->owner_id,
         ];
         if (isset($workspace_dto->uuid)){
             $guard = ['uuid' => $workspace_dto->uuid];
@@ -32,25 +33,30 @@ class Workspace extends PackageManagement implements ContractsWorkspace
         }else{
             $create = [$add];
         }
-        $model = $this->usingEntity()->updateOrCreate(...$create);
+        return $this->usingEntity()->updateOrCreate(...$create);
+    }
+
+    public function prepareStoreWorkspace(WorkspaceData $workspace_dto): Model{
+        $model = $this->prepareUpdateCreate($workspace_dto);
         if (isset($workspace_dto->props->setting->address)) {
-            $address             = &$workspace_dto->props->setting->address;
-            $address->model_type = $model->getMorphClass();
-            $address->model_id   = $model->getKey(); 
-            $address_model       = $this->schemaContract('address')->prepareStoreAddress($address);
-            $address->id         = $address_model->getKey();
-            unset($address->props);
+            $this->prepareStoreAddressWorkspace($model, $workspace_dto);
         }
         if (isset($workspace_dto->props->setting->logo)) {
             $logo = &$workspace_dto->props->setting->logo;
             $logo = $model->setupFile($logo);
         }
-        // $license = &$workspace_dto->props->setting->license;
-        // $license = $model->setupFile($license);
-        // unset($workspace_dto->props->setting->logo, $workspace_dto->props->setting->license);
         $this->fillingProps($model,$workspace_dto->props);
         $model->save();
         return $this->workspace_model = $model;
+    }
+
+    protected function prepareStoreAddressWorkspace(Model $workspace, WorkspaceData &$workspace_dto): void{
+        $address             = &$workspace_dto->props->setting->address;
+        $address->model_type = $workspace->getMorphClass();
+        $address->model_id   = $workspace->getKey(); 
+        $address_model       = $this->schemaContract('address')->prepareStoreAddress($address);
+        $address->id         = $address_model->getKey();
+        unset($address->props);
     }
 
     // public function prepareShowWorkspace(?Model $model = null, ? array $attributes = null): ?Model{

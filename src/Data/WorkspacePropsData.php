@@ -12,4 +12,12 @@ class WorkspacePropsData extends Data implements DataWorkspacePropsData{
     #[MapInputName('setting')]
     #[MapName('setting')]
     public ?WorkspaceSettingData $setting = null;
+
+    #[MapInputName('integration')]
+    #[MapName('integration')]
+    public ?array $integration = null;
+
+    #[MapInputName('props')]
+    #[MapName('props')]
+    public ?array $props = null;
 }
